@@ -7,7 +7,7 @@ const api = new DerivAPIBasic({ connection });
 let token = "";
 let numberOfBuys = 0;
 let symbol = "BOOM500";
-let entryPrice = 1000;
+let entryPrice = 2000;
 
 const contracts_for_symbol_request = {
     contracts_for: symbol,
@@ -31,7 +31,7 @@ const price_proposal = {
 
 let buy_contract_request = {
     buy: "",
-    price: entryPrice,
+    price: 2000,
     req_id: 12,
 };
 
