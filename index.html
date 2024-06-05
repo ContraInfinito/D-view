@@ -6,18 +6,18 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="styles.css">
     <script type="module" src="index.js" defer></script>
-    <title>Trading App</title>
+    <title>D view</title>
 </head>
 <body>
     <div class="container">
-        <h1>Trading App</h1>
+        <h1>D view</h1>
         <div class="form-group">
             <label for="token">Token:</label>
-            <input type="text" id="token" placeholder="Enter your token">
-            <button id="checkToken">Check Token</button>
+            <input type="text" id="token" placeholder="Ingrese su Token Deriv">
+            <button id="checkToken">Revisar Token</button>
         </div>
         <div class="form-group">
-            <label for="symbol">Select Symbol:</label>
+            <label for="symbol">Índice:</label>
             <select id="symbol">
                 <option value="BOOM500">Boom 500</option>
                 <option value="CRASH500">Crash 500</option>
@@ -26,14 +26,14 @@
             </select>
         </div>
         <div class="form-group">
-            <label for="price">Entry Price:</label>
-            <input type="number" id="price" placeholder="Enter entry price">
+            <label for="price">Precio de la Entrada:</label>
+            <input type="number" id="price" placeholder="Precio de la Entrada">
         </div>
         <div class="form-group">
-            <label for="numberOfBuys">Number of Buys:</label>
-            <input type="number" id="numberOfBuys" placeholder="Enter number of buys">
+            <label for="numberOfBuys">Número de Entradas:</label>
+            <input type="number" id="numberOfBuys" placeholder="Número de Entradas">
         </div>
-        <button id="startTrading">Start Trading</button>
+        <button id="startTrading">Colocar Orden</button>
         <div id="output"></div>
     </div>
 </body>
