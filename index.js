@@ -61,14 +61,18 @@ const resetState = () => {
     };
 };
 
+const displayMessage = (message) => {
+    outputDiv.innerHTML += `<p>${message}</p>`;
+};
+
 const loginResponse = async (res) => {
     const data = JSON.parse(res.data);
 
     if (data.error !== undefined) {
-        outputDiv.innerHTML += `<p>Authentication unsuccessful: ${data.error.message}</p>`;
+        displayMessage(`Authentication unsuccessful: ${data.error.message}`);
         await api.disconnect();
     } else if (data.msg_type === "authorize") {
-        outputDiv.innerHTML += "<p>Authentication successful.</p>";
+        displayMessage("Authentication successful.");
         connection.removeEventListener("message", loginResponse);
         getContractsForSymbol();
     }
@@ -78,7 +82,7 @@ const contractsForSymbolResponse = async (res) => {
     const data = JSON.parse(res.data);
 
     if (data.error !== undefined) {
-        outputDiv.innerHTML += `<p>Error fetching contracts: ${data.error.message}</p>`;
+        displayMessage(`Error fetching contracts: ${data.error.message}`);
         connection.removeEventListener("message", contractsForSymbolResponse);
         await api.disconnect();
     } else if (data.msg_type === "contracts_for") {
@@ -86,7 +90,7 @@ const contractsForSymbolResponse = async (res) => {
         for (let i = 0; i < numberOfBuys; i++) {
             connection.addEventListener("message", priceProposalResponse);
             await api.proposal(price_proposal);
-            await new Promise(resolve => setTimeout(resolve, 500)); // Wait one second between proposals
+            await new Promise(resolve => setTimeout(resolve, 1000)); // Wait one second between proposals
         }
     }
 };
@@ -95,7 +99,7 @@ const priceProposalResponse = async (res) => {
     const data = JSON.parse(res.data);
 
     if (data.error !== undefined) {
-        outputDiv.innerHTML += `<p>Error fetching proposal: ${data.error.message}</p>`;
+        displayMessage(`Error fetching proposal: ${data.error.message}`);
         connection.removeEventListener("message", priceProposalResponse);
         await api.disconnect();
     } else if (data.msg_type === "proposal") {
@@ -110,9 +114,9 @@ const buyContractResponse = async (res) => {
     const data = JSON.parse(res.data);
 
     if (data.error !== undefined) {
-        outputDiv.innerHTML += `<p>Buy unsuccessful: ${data.error.message}</p>`;
+        displayMessage(`Buy unsuccessful: ${data.error.message}`);
     } else {
-        outputDiv.innerHTML += "<p>Buy successful.</p>";
+        displayMessage("Buy successful.");
     }
     connection.removeEventListener("message", buyContractResponse);
     await api.disconnect();
