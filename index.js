@@ -16,7 +16,7 @@ const contracts_for_symbol_request = {
     product_type: "basic",
 };
 
-const price_proposal = {
+let price_proposal = {
     amount: 2000,
     basis: "stake",
     contract_type: "MULTUP",
@@ -98,7 +98,7 @@ const getContractsForSymbol = async () => {
     for (let i = 0; i < numberOfBuys; i++) {
         connection.addEventListener("message", priceProposalResponse);
         await api.proposal(price_proposal);
-        await new Promise(resolve => setTimeout(resolve, 1000)); // Wait one second between proposals
+        await new Promise(resolve => setTimeout(resolve, 500)); // Wait half second between proposals
     }
 };
 
@@ -120,6 +120,7 @@ const startTrading = async () => {
 
     price_proposal.contract_type = symbol.startsWith("BOOM") ? "MULTUP" : "MULTDOWN";
     price_proposal.symbol = symbol;
+    price_proposal.amount = entryPrice; // Use the user-defined entry price
     buy_contract_request.price = entryPrice;
 
     await authenticate();
