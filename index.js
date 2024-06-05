@@ -90,7 +90,7 @@ const contractsForSymbolResponse = async (res) => {
         for (let i = 0; i < numberOfBuys; i++) {
             connection.addEventListener("message", priceProposalResponse);
             await api.proposal(price_proposal);
-            await new Promise(resolve => setTimeout(resolve, 1000)); // Espera un segundo entre propuestas
+            await new Promise(resolve => setTimeout(resolve, 1000)); // Wait one second between proposals
         }
     }
 };
@@ -120,7 +120,7 @@ const buyContractResponse = async (res) => {
     }
     connection.removeEventListener("message", buyContractResponse);
     await api.disconnect();
-    resetState(); // Restablece el estado después de cada sesión de trading
+    resetState(); // Reset state after each trading session
 };
 
 const getContractsForSymbol = async () => {
@@ -146,7 +146,7 @@ const startTrading = async () => {
 
     price_proposal.contract_type = symbol.startsWith("BOOM") ? "MULTUP" : "MULTDOWN";
     price_proposal.symbol = symbol;
-    price_proposal.amount = entryPrice; // Usa el precio de entrada definido por el usuario
+    price_proposal.amount = entryPrice; // Use the user-defined entry price
     buy_contract_request.price = entryPrice;
 
     await authenticate();
