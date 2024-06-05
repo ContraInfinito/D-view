@@ -39,12 +39,14 @@ const outputDiv = document.getElementById("output");
 
 const loginResponse = async (res) => {
     const data = JSON.parse(res.data);
+    console.log("Login response:", data);
 
     if (data.error !== undefined) {
         outputDiv.innerHTML += `<p>Error: ${data.error.message}</p>`;
         await api.disconnect();
     } else if (data.msg_type === "authorize") {
         outputDiv.innerHTML += "<p>Authentication successful.</p>";
+        console.log("Authentication successful.");
         connection.removeEventListener("message", loginResponse);
 
         // After authentication, get contracts and proposals.
@@ -54,6 +56,7 @@ const loginResponse = async (res) => {
 
 const contractsForSymbolResponse = async (res) => {
     const data = JSON.parse(res.data);
+    console.log("Contracts for symbol response:", data);
 
     if (data.error !== undefined) {
         outputDiv.innerHTML += `<p>Error: ${data.error.message}</p>`;
@@ -61,18 +64,22 @@ const contractsForSymbolResponse = async (res) => {
         await api.disconnect();
     } else if (data.msg_type === "contracts_for") {
         outputDiv.innerHTML += `<p>Contracts for symbol: ${JSON.stringify(data.contracts_for)}</p>`;
+        console.log("Contracts for symbol received.");
         connection.removeEventListener("message", contractsForSymbolResponse);
     }
 };
 
 const priceProposalResponse = async (res) => {
     const data = JSON.parse(res.data);
+    console.log("Price proposal response:", data);
+
     if (data.error !== undefined) {
         outputDiv.innerHTML += `<p>Error: ${data.error.message}</p>`;
         connection.removeEventListener("message", priceProposalResponse);
         await api.disconnect();
     } else if (data.msg_type === "proposal") {
         outputDiv.innerHTML += `<p>Proposal: ${JSON.stringify(data.proposal)}</p>`;
+        console.log("Proposal received.");
         buy_contract_request.buy = data.proposal.id;
         connection.addEventListener("message", buyContractResponse);
         await api.buy(buy_contract_request);
@@ -82,10 +89,13 @@ const priceProposalResponse = async (res) => {
 
 const buyContractResponse = async (res) => {
     const data = JSON.parse(res.data);
+    console.log("Buy contract response:", data);
+
     if (data.error !== undefined) {
         outputDiv.innerHTML += `<p>Error: ${data.error.message}</p>`;
     } else {
         outputDiv.innerHTML += `<p>Buy successful: ${JSON.stringify(data.buy)}</p>`;
+        console.log("Buy successful.");
     }
     connection.removeEventListener("message", buyContractResponse);
     await api.disconnect();
@@ -98,7 +108,7 @@ const getContractsForSymbol = async () => {
     for (let i = 0; i < numberOfBuys; i++) {
         connection.addEventListener("message", priceProposalResponse);
         await api.proposal(price_proposal);
-        await new Promise(resolve => setTimeout(resolve, 500)); // Wait half second between proposals
+        await new Promise(resolve => setTimeout(resolve, 1000)); // Wait one second between proposals
     }
 };
 
@@ -123,6 +133,7 @@ const startTrading = async () => {
     price_proposal.amount = entryPrice; // Use the user-defined entry price
     buy_contract_request.price = entryPrice;
 
+    console.log("Starting trading with parameters:", { token, symbol, entryPrice, numberOfBuys });
     await authenticate();
 };
 
