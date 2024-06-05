@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="styles.css">
+    <script type="module" src="index.js" defer></script>
+    <title>Trading App</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Trading App</h1>
+        <div class="form-group">
+            <label for="token">Token:</label>
+            <input type="text" id="token" placeholder="Enter your token">
+            <button id="checkToken">Check Token</button>
+        </div>
+        <div class="form-group">
+            <label for="symbol">Select Symbol:</label>
+            <select id="symbol">
+                <option value="BOOM500">Boom 500</option>
+                <option value="CRASH500">Crash 500</option>
+                <option value="CRASH1000">Crash 1000</option>
+                <option value="BOOM1000">Boom 1000</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="price">Entry Price:</label>
+            <input type="number" id="price" placeholder="Enter entry price">
+        </div>
+        <div class="form-group">
+            <label for="numberOfBuys">Number of Buys:</label>
+            <input type="number" id="numberOfBuys" placeholder="Enter number of buys">
+        </div>
+        <button id="startTrading">Start Trading</button>
+        <div id="output"></div>
+    </div>
+</body>
+</html>
