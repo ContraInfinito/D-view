@@ -86,7 +86,7 @@ const contractsForSymbolResponse = async (res) => {
         for (let i = 0; i < numberOfBuys; i++) {
             connection.addEventListener("message", priceProposalResponse);
             await api.proposal(price_proposal);
-            await new Promise(resolve => setTimeout(resolve, 1000)); // Wait one second between proposals
+            await new Promise(resolve => setTimeout(resolve, 500)); // Wait one second between proposals
         }
     }
 };
